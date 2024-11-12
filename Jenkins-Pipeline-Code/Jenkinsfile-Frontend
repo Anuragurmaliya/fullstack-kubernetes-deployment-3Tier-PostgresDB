@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/vardhan1228/fullstack-kubernetes-deployment-3Tier-PostgresDB.git'
+                git branch: 'main', url: 'https://github.com/Anuragurmaliya/fullstack-kubernetes-deployment-3Tier-PostgresDB.git'
             }
         }
         stage('Sonarqube Analysis') {
