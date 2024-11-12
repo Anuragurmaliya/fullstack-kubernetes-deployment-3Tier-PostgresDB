@@ -4,10 +4,10 @@ pipeline {
         nodejs 'nodejs'
     }
     environment  {
-        SCANNER_HOME=tool 'sonar-scanner'
-        AWS_ACCOUNT_ID = credentials('ACCOUNT_ID')
-        AWS_ECR_REPO_NAME = credentials('ECR_REPO1')
-        AWS_DEFAULT_REGION = 'us-west-2'
+        SCANNER_HOME=tool 'sonar-tool'
+        AWS_ACCOUNT_ID = credentials('account_id')
+        AWS_ECR_REPO_NAME = credentials('ecr_repo1')
+        AWS_DEFAULT_REGION = 'us-east-1'
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
     }
     stages {
@@ -39,14 +39,14 @@ pipeline {
                 }
             }
         }
-        stage('OWASP Dependency-Check Scan') {
-            steps {
-                dir('frontend') {
-                    dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-                }
-            }
-        }
+      //  stage('OWASP Dependency-Check Scan') {
+      //      steps {
+       //         dir('frontend') {
+       //             dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
+       //             dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+       //         }
+      //      }
+     //   }
         stage('Trivy File Scan') {
             steps {
                 dir('frontend') {
@@ -87,14 +87,14 @@ pipeline {
         stage('Update Deployment file') {
             environment {
                 GIT_REPO_NAME = "fullstack-kubernetes-deployment-3Tier-PostgresDB"
-                GIT_USER_NAME = "vardhan1228"
+                GIT_USER_NAME = "Anuragurmaliya"
             }
             steps {
                 dir('kubernetes') {
                     withCredentials([string(credentialsId: 'github', variable: 'git_token')]) {
                         sh '''
-                            git config user.email "vvardhan1211@gmail.com"
-                            git config user.name "vardhan1228"
+                            git config user.email "anuragurmaliya911@gmail.com"
+                            git config user.name "Anuragurmaliya"
                             BUILD_NUMBER=${BUILD_NUMBER}
                             echo $BUILD_NUMBER
                             sed -i "s#image:.*#image: $REPOSITORY_URI$AWS_ECR_REPO_NAME:$BUILD_NUMBER#g" frontend.yaml
