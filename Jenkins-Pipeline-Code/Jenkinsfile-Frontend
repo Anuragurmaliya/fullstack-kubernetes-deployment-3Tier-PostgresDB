@@ -47,13 +47,13 @@ pipeline {
        //         }
       //      }
      //   }
-        stage('Trivy File Scan') {
-            steps {
-                dir('frontend') {
-                    sh 'trivy fs . > trivyfs.txt'
-                }
-            }
-        }
+     //   stage('Trivy File Scan') {
+     //       steps {
+     //           dir('frontend') {
+       //             sh 'trivy fs . > trivyfs.txt'
+         //       }
+           // }
+        //}
         stage("Docker Image Build") {
             steps {
                 script {
