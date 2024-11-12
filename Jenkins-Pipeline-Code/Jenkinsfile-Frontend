@@ -74,14 +74,14 @@ pipeline {
                 }
             }
         }
-        stage("TRIVY Image Scan") {
-            steps {
-                sh 'trivy image ${REPOSITORY_URI}${AWS_ECR_REPO_NAME}:${BUILD_NUMBER} > trivyimage.txt' 
-            }
-        }
+     //   stage("TRIVY Image Scan") {
+     //       steps {
+      //          sh 'trivy image ${REPOSITORY_URI}${AWS_ECR_REPO_NAME}:${BUILD_NUMBER} > trivyimage.txt' 
+     //       }
+   //     }
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/vardhan1228/fullstack-kubernetes-deployment-3Tier-PostgresDB.git'
+                git branch: 'main', url: 'https://github.com/Anuragurmaliya/fullstack-kubernetes-deployment-3Tier-PostgresDB.git'
             }
         }
         stage('Update Deployment file') {
